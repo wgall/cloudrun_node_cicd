@@ -36,7 +36,7 @@ jobs:
       - name: Checkout Pipeline repository
         uses: actions/checkout@v3
         with:
-          repository: wgall/cloudrun_laravel_cicd
+          repository: wgall/cloudrun_node_cicd
           token: ${{ secrets.CLOUDRUN_GIT_TOKEN }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -100,7 +100,7 @@ jobs:
       - name: Checkout Pipeline repository
         uses: actions/checkout@v3
         with:
-          repository: wgall/cloudrun_laravel_cicd
+          repository: wgall/cloudrun_node_cicd
           token: ${{ secrets.CLOUDRUN_GIT_TOKEN }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
