@@ -8,7 +8,7 @@ resource "google_cloud_run_service" "default" {
         image = "gcr.io/labs-370214/${var.image}:${var.tag}"
         ports {
           protocol       = "TCP"
-          container_port = 300
+          container_port = 3000
         }
       }
     }
