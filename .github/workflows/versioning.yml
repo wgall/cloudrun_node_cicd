@@ -2,6 +2,11 @@ name: Deploying specified version for preview
 
 on:
   workflow_call:
+    secrets:
+      sakey:
+        required: true
+      token:
+        required: true
 
 jobs:
   deploy_application:

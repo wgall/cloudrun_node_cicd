@@ -2,7 +2,12 @@ name: Deploy on Production
 
 on:
   workflow_call:
-
+    secrets:
+      sakey:
+        required: true
+      token:
+        required: true
+    
 jobs:
   deploy_on_prod:
     runs-on: ubuntu-latest
