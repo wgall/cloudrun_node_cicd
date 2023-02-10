@@ -143,6 +143,9 @@ jobs:
         run: |
          gcloud compute url-maps add-path-matcher test --path-matcher-name=${{env.reponame}}-stage --default-service=https://www.googleapis.com/compute/v1/projects/labs-370214/global/backendServices/${{ env.reponame }}-stage --new-hosts="${{env.reponame}}-stage.gallit.net"
   deploy_tagged_version:
+      if: "!contains(github.ref, 'stage') && !contains(github.ref, 'dev')"
+      runs-on: ubuntu-latest
+      steps:
       - name: Checkout code repository
         uses: actions/checkout@v3
       - name: Authenticate to GCP
