@@ -82,13 +82,13 @@ jobs:
       - name: Initialize terraform 
         working-directory: ./dev
         run: |
-          sed -i "s/folder/${{ env.reponame}}-dev/" main.tf
+          sed -i "s/folder/${{ env.reponame }}-dev/" main.tf
           sed -i "s/pid/${{ inputs.projectid}}/" main.tf
-          terraform init -force-copy
+          terraform init -force-copy 
       - name: Apply terraform 
         working-directory: ./dev
         run: | 
-         terraform apply --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-dev" 
+         terraform apply -lock=false --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-dev" 
       - name: Map backend
         if: ${{ env.exists == '0' }}
         run: |
@@ -156,7 +156,7 @@ jobs:
       - name: Apply terraform 
         working-directory: ./dev
         run: | 
-         terraform apply --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-stage" | grep "backend-id =" | cut -d " " -f 3
+         terraform apply -lock=false  --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-stage" | grep "backend-id =" | cut -d " " -f 3
       - name: Map backend
         if: ${{ env.exists == '0' }}
         run: |
@@ -213,5 +213,5 @@ jobs:
           version=$(echo ${{ env.tag }} | tr . -)
           sed -i "s/pid/${{ inputs.projectid}}/" main.tf
           terraform init 
-          terraform apply --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-$version"
+          terraform apply -lock=false  --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-$version"
           gcloud compute url-maps add-path-matcher ${{ inputs.urlmap }} --path-matcher-name=${{env.reponame}}-dev --default-service=https://www.googleapis.com/compute/v1/projects/${{ inputs.projectid }}/global/backendServices/${{ env.reponame }}-dev --new-hosts="${{env.reponame}}-dev.${{ inputs.domain }}"
