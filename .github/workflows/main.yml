@@ -80,13 +80,13 @@ jobs:
           terraform init
           terraform apply --auto-approve  -var "project=${{ env.reponame }}-dev/"
       - name: Initialize terraform 
-        working-directory: ./node/dev
+        working-directory: ./dev
         run: |
           sed -i "s/folder/${{ env.reponame}}-dev/" main.tf
           sed -i "s/pid/${{ inputs.projectid}}/" main.tf
           terraform init -force-copy
       - name: Apply terraform 
-        working-directory: ./node/dev
+        working-directory: ./dev
         run: | 
          terraform apply --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-dev" | grep "backend-id =" | cut -d " " -f 3
       - name: Map backend
@@ -148,13 +148,13 @@ jobs:
           terraform init
           terraform apply --auto-approve  -var "project=${{ env.reponame }}-stage/"
       - name: Initialize terraform 
-        working-directory: ./node/dev
+        working-directory: ./dev
         run: |
           sed -i "s/folder/${{ env.reponame}}-stage/" main.tf
           sed -i "s/pid/${{ inputs.projectid}}/" main.tf
           terraform init -force-copy
       - name: Apply terraform 
-        working-directory: ./node/dev
+        working-directory: ./dev
         run: | 
          terraform apply --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-stage" | grep "backend-id =" | cut -d " " -f 3
       - name: Map backend
@@ -206,7 +206,7 @@ jobs:
           project_id: ${{ inputs.projectid }}
           export_default_credentials: true 
       - name: Deploy application  
-        working-directory: ./node/versioning
+        working-directory: ./versioning
         env:
           tag: ${{ github.event.release.tag_name }}
         run: |
