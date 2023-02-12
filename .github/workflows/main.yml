@@ -92,7 +92,7 @@ jobs:
       - name: Map backend
         if: ${{ env.exists == '0' }}
         run: |
-         gcloud compute url-maps add-path-matcher ${{ inputes.urlmap }} --path-matcher-name=${{env.reponame}}-dev --default-service=https://www.googleapis.com/compute/v1/projects/${{ inputs.projectid }}/global/backendServices/${{ env.reponame }}-dev --new-hosts="${{env.reponame}}-dev.${{ inputs.domain }}"
+         gcloud compute url-maps add-path-matcher ${{ inputs.urlmap }} --path-matcher-name=${{env.reponame}}-dev --default-service=https://www.googleapis.com/compute/v1/projects/${{ inputs.projectid }}/global/backendServices/${{ env.reponame }}-dev --new-hosts="${{env.reponame}}-dev.${{ inputs.domain }}"
 #        gcloud compute backend-services update ${{ env.reponame }}-dev  --security-policy alllow-only-for-specific-ip  --global
   deploy_on_stage: 
     if: contains(github.ref, 'stage')
@@ -214,4 +214,4 @@ jobs:
           sed -i "s/pid/${{ inputs.projectid}}/" main.tf
           terraform init 
           terraform apply --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-$version"
-          gcloud compute url-maps add-path-matcher ${{ inputes.urlmap }} --path-matcher-name=${{env.reponame}}-dev --default-service=https://www.googleapis.com/compute/v1/projects/${{ inputs.projectid }}/global/backendServices/${{ env.reponame }}-dev --new-hosts="${{env.reponame}}-dev.${{ inputs.domain }}"
+          gcloud compute url-maps add-path-matcher ${{ inputs.urlmap }} --path-matcher-name=${{env.reponame}}-dev --default-service=https://www.googleapis.com/compute/v1/projects/${{ inputs.projectid }}/global/backendServices/${{ env.reponame }}-dev --new-hosts="${{env.reponame}}-dev.${{ inputs.domain }}"
