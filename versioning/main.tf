@@ -7,7 +7,7 @@ terraform {
   }
 }
 provider "google" {
-  project     = "labs-370214"
+  project     = "pid"
   region      = "europe-central2"
 }
 variable "project" {
@@ -21,4 +21,8 @@ variable "image" {
 variable "tag" {
     type = string
     default = "tag"
+}
+variable "projectid" {
+  type = string 
+  default = "pid"
 }
