@@ -19,5 +19,5 @@ provider "google" {
 resource "google_storage_bucket_object" "backend_folder" {
   name          = "${var.project}"
   content       = "Empty dir"
-  bucket        = "wgall-labs"
+  bucket        = "infra-backend-animativ"
 }

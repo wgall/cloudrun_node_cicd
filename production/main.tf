@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "wgall-labs"
+    bucket = "infra-backend-animativ"
     prefix = "folder"
   }
 }
