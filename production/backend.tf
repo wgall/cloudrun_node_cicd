@@ -11,7 +11,7 @@ resource "google_compute_backend_service" "backend" {
 
 
   backend {
-    group = "projects/${var.projectid}/global/networkEndpointGroups/cloudrun"
+    group = "projects/${var.projectid}/global/networkEndpointGroups/cloudrun-neg"
   }
 
 }
