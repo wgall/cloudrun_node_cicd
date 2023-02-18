@@ -48,8 +48,8 @@ jobs:
       - name: Build and push image
         working-directory: ./
         run: |
-          docker build . -t gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}
-          docker push gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}
+          docker build . -t gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}-${{github.run_number}}
+          docker push gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}-${{github.run_number}}
       - name: Checkout Pipeline repository
         uses: actions/checkout@v3
         with:
@@ -88,7 +88,7 @@ jobs:
       - name: Apply terraform 
         working-directory: ./dev
         run: | 
-         terraform apply -lock=false --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-dev" 
+         terraform apply -lock=false --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}-${{github.run_number}}" -var "project=${{env.reponame}}-dev" 
       - name: Map backend
         if: ${{ env.exists == '0' }}
         run: |
@@ -116,8 +116,8 @@ jobs:
       - name: Build and push image
         working-directory: ./
         run: |
-          docker build . -t gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}
-          docker push gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}
+          docker build . -t gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}-${{github.run_number}}
+          docker push gcr.io/${{ inputs.projectid }}/${{ env.reponame }}:${{env.tag}}-${{github.run_number}}
       - name: Checkout Pipeline repository
         uses: actions/checkout@v3
         with:
@@ -156,7 +156,7 @@ jobs:
       - name: Apply terraform 
         working-directory: ./dev
         run: | 
-         terraform apply -lock=false  --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}" -var "project=${{env.reponame}}-stage" | grep "backend-id =" | cut -d " " -f 3
+         terraform apply -lock=false  --auto-approve -var "projectid=${{ inputs.projectid }}" -var "image=${{env.reponame}}" -var "tag=${{env.tag}}-${{github.run_number}}" -var "project=${{env.reponame}}-stage" | grep "backend-id =" | cut -d " " -f 3
       - name: Map backend
         if: ${{ env.exists == '0' }}
         run: |
